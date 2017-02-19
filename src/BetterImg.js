@@ -63,6 +63,9 @@ class BetterImg extends Component {
       imgHeight,
       containerHeight: this.props.height || imgHeight,
     });
+
+    //Fire handleUpdateSize once to trigger calculation
+    this.handleUpdateSize();
   }
 
   componentDidMount() {
@@ -75,10 +78,9 @@ class BetterImg extends Component {
 
   handleUpdateSize = () => {
     // Set Component Width to props.width (if set), or containerWidth
-    console.log('size', this.container.offsetWidth);
     const containerWidth = this.container.offsetWidth;
     this.setState({
-      containerWidth: this.props.width || containerWidth,
+      containerWidth: containerWidth,
     });
   }
 
@@ -87,24 +89,26 @@ class BetterImg extends Component {
     // If no resizeMode is provided, be normal <img />
     if (!this.props.resizeMode) return (<img {...this.props} />);
 
+    // If props.width is provide, use it, else use containerWidth for calculation
     const containerWidth = this.props.width || this.state.containerWidth;
     const containerHeight = this.state.containerHeight;
-    console.log('container (w, h) = ', containerWidth, containerHeight);
 
     const { src, resizeMode } = this.props;
     const { imgWidth, imgHeight } = this.state;
 
     const wrapperStyles = {
       overflow: 'hidden',
-      width: containerWidth,
+      // If props.width is provide, use it, else no need to control container's width
+      width: this.props.width ? this.props.width : undefined,
       height: containerHeight,
       border: '1px solid black',
     };
 
-    // ByHeight
+
+    // Calcualte Scale
     let { scaleX, scaleY } = calculateScale(resizeMode, containerWidth, containerHeight, imgWidth, imgHeight);
 
-    // Center
+    // Center by default
     let x = .5 * (containerWidth - imgWidth);
     let y = .5 * (containerHeight - imgHeight);
 
