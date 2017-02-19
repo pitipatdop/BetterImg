@@ -1,4 +1,4 @@
-# BetterImg
+# BetterImg (Work in progress)
 
 A better react component for <img /> tag.
 
