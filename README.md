@@ -1,6 +1,6 @@
 # BetterImg (Work in progress)
 
-A better react component for `<img />` tag.
+A tiny library that add extra feature for `<img />` tag.
 
 ## Props
 all normal `<img />` props can be used
