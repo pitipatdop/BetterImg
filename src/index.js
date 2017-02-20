@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+const elementResizeDetectorMaker = require("element-resize-detector");
 
 const calculateScale = (resizeMode, containerWidth, containerHeight, imgWidth, imgHeight) => {
 
@@ -31,6 +32,8 @@ const calculateScale = (resizeMode, containerWidth, containerHeight, imgWidth, i
 }
 
 class BetterImg extends Component {
+
+  erd = null;
 
   static propTypes = {
     src: PropTypes.string,
@@ -69,16 +72,18 @@ class BetterImg extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.handleUpdateSize);
+    if (!this.erd) this.erd = elementResizeDetectorMaker();
+    this.erd.listenTo(this.container, this.handleUpdateSize);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleUpdateSize);
+    this.erd.removeListener(this.container, this.handleUpdateSize);
   }
 
-  handleUpdateSize = () => {
+  handleUpdateSize = (element) => {
     // Set Component Width to props.width (if set), or containerWidth
-    const containerWidth = this.container.offsetWidth;
+    const el = element || this.container;
+    const containerWidth = el.offsetWidth;
     this.setState({
       containerWidth: containerWidth,
     });

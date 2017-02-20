@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import BetterImg from '../../dist';
+// import BetterImg from '../../dist';
+import BetterImg from '../../src';
 
 export default class App extends Component {
   render() {
