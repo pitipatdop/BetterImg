@@ -10,9 +10,9 @@
   "scripts": {
     "precommit": "npm test",
     "commit": "git-cz",
-    "dev": "node server.js",
-    "test": "mocha src/index.spec.js --compilers js:babel-register",
-    "build": "babel --copy-files --out-dir dist --ignore *.spec.js src",
+    "dev": "cross-env NODE_ENV=development node server.js",
+    "test": "cross-env NODE_ENV=test mocha src/index.spec.js --compilers js:babel-register",
+    "build": "cross-env NODE_ENV=production babel --copy-files --out-dir dist --ignore *.spec.js src",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "keywords": [
@@ -37,6 +37,7 @@
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
     "commitizen": "^2.8.7",
+    "cross-env": "^3.1.4",
     "cz-conventional-changelog": "^1.2.0",
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.1.0",
