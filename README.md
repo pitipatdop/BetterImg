@@ -1,4 +1,4 @@
-# BetterImg (beta)
+# BetterImg
 
 A tiny library that add extra feature for `<img />` tag.
 
