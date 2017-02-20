@@ -8,6 +8,7 @@
     "url": "git+https://github.com/Doppy/BetterImg.git"
   },
   "scripts": {
+    "precommit": "npm test",
     "commit": "git-cz",
     "dev": "node server.js",
     "test": "mocha src/index.spec.js --compilers js:babel-register",
@@ -43,6 +44,7 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.0",
     "eventsource-polyfill": "^0.9.6",
+    "husky": "^0.13.1",
     "mocha": "^3.2.0",
     "nyc": "^10.0.0",
     "react": "^15.4.2",
