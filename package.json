@@ -1,15 +1,25 @@
 {
   "name": "better-img",
   "version": "1.0.1",
-  "description": "",
-  "main": "index.js",
+  "description": "A better react component for img tag.",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --progress --colors --config webpack.config.production.js",
+    "prepublish": "npm run build && npm version patch",
+    "publish": "npm publish"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "react",
+    "img",
+    "resizeMode"
+  ],
+  "author": "Pitipat Srichairat",
   "license": "ISC",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-loader": "^6.3.2",
@@ -38,6 +48,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
+    "element-resize-detector": "^1.1.10",
     "eventsource-polyfill": "^0.9.6",
     "lodash": "^4.17.4",
     "react": "^15.4.2",
@@ -47,10 +58,5 @@
   },
   "czConfig": {
     "path": "node_modules/cz-conventional-changelog"
-  },
-  "config": {
-    "ghooks": {
-      "pre-commit": "npm run cover && npm run check-coverage"
-    }
   }
 }
