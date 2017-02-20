@@ -121,9 +121,11 @@ class BetterImg extends Component {
       transform: `translate3d(${x}px, ${y}px, 0) scaleX(${scaleX}) scaleY(${scaleY})`,
     }
 
+    const imgProps = _.omit(this.props, ['width', 'height']);
     return (
       <div className="better-img" style={wrapperStyles} ref={container => this.container = container}>
         <img
+          {...imgProps}
           src={src}
           style={imgStyle}
           onLoad={this.handleOnLoad}
