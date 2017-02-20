@@ -104,7 +104,6 @@ class BetterImg extends Component {
       border: '1px solid black',
     };
 
-
     // Calcualte Scale
     let { scaleX, scaleY } = calculateScale(resizeMode, containerWidth, containerHeight, imgWidth, imgHeight);
 
@@ -128,6 +127,5 @@ class BetterImg extends Component {
     )
   }
 };
-
 
 export default BetterImg;

@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "node server.js",
-    "build": "webpack --progress --colors --config webpack.config.production.js",
+    "build": "babel --copy-files --out-dir dist --ignore *.test.js src",
     "prepublish": "npm run build && npm version patch",
     "publish": "npm publish"
   },
@@ -38,7 +38,10 @@
     "eslint-plugin-react": "^6.10.0",
     "mocha": "^3.2.0",
     "nyc": "^10.0.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
     "react-hot-loader": "^3.0.0-beta.2",
+    "react-motion": "^0.4.7",
     "rimraf": "^2.5.4",
     "semantic-release": "^6.3.2",
     "semantic-release-gitlab": "^2.5.1",
@@ -50,11 +53,7 @@
     "babel-polyfill": "^6.23.0",
     "element-resize-detector": "^1.1.10",
     "eventsource-polyfill": "^0.9.6",
-    "lodash": "^4.17.4",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "react-motion": "^0.4.7",
-    "react-sizeme": "^2.2.0"
+    "lodash": "^4.17.4"
   },
   "czConfig": {
     "path": "node_modules/cz-conventional-changelog"

@@ -1,6 +1,5 @@
 var path = require('path');
 var webpack = require('webpack');
-// var HappyPack = require('happypack');
 
 module.exports = {
   devtool: 'sourcemap',
@@ -19,13 +18,13 @@ module.exports = {
         NODE_ENV: JSON.stringify(`${process.env.NODE_ENV}`),
       },
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false,
-      },
-      minimize: true,
-    }),
-    new webpack.NoEmitOnErrorsPlugin(),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compressor: {
+    //     warnings: false,
+    //   },
+    //   minimize: true,
+    // }),
+    // new webpack.NoEmitOnErrorsPlugin(),
   ],
   module: {
     loaders: [
