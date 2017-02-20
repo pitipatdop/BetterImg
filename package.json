@@ -1,12 +1,16 @@
 {
   "name": "better-img",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A better react component for img tag.",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Doppy/BetterImg.git"
+  },
   "scripts": {
     "dev": "node server.js",
     "build": "babel --copy-files --out-dir dist --ignore *.test.js src",
-    "prepublish": "npm run build && npm version patch",
+    "prepublish": "npm run build",
     "publish": "npm publish"
   },
   "keywords": [
