@@ -1,18 +1,18 @@
 {
   "name": "better-img",
-  "version": "1.0.8",
+  "version": "0.0.0-development",
   "description": "A better react component for img tag.",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Doppy/BetterImg.git"
+    "url": "git+https://github.com/Doppy/BetterImg.git"
   },
   "scripts": {
     "commit": "git-cz",
     "dev": "node server.js",
-    "build": "babel --copy-files --out-dir dist --ignore *.test.js src",
-    "prepublish": "npm run build",
-    "publish": "npm publish"
+    "test": "mocha src/index.spec.js --compilers js:babel-register",
+    "build": "babel --copy-files --out-dir dist --ignore *.spec.js src",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "keywords": [
     "react",
@@ -33,7 +33,6 @@
     "babel-preset-react": "^6.23.0",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.22.0",
-    "babel-preset-stage-2": "^6.18.0",
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
     "commitizen": "^2.8.7",
