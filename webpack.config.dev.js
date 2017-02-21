@@ -22,10 +22,10 @@ module.exports = {
     publicPath: '/static/',
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      React: 'react',
-      _: 'lodash',
-    }),
+    // new webpack.ProvidePlugin({
+      // React: 'react',
+      // _: 'lodash',
+    // }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
