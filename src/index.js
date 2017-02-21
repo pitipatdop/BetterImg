@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import omit from 'lodash/omit';
+
 const elementResizeDetectorMaker = require("element-resize-detector");
 
 const calculateScale = (resizeMode, containerWidth, containerHeight, imgWidth, imgHeight) => {
@@ -124,7 +126,7 @@ class BetterImg extends Component {
 
     // If no resizeMode is provided, be normal <img />
     if (!this.props.resizeMode) {
-      const imgProps = _.omit(this.props, ['focalPoint', 'resizeMode', 'scale']);
+      const imgProps = omit(this.props, ['focalPoint', 'resizeMode', 'scale']);
       return (<img {...imgProps} />);
     }
 
@@ -169,7 +171,7 @@ class BetterImg extends Component {
       transformOrigin: '0% 0%',
     }
 
-    const imgProps = _.omit(this.props, ['width', 'height', 'focalPoint', 'scale', 'resizeMode']);
+    const imgProps = omit(this.props, ['width', 'height', 'focalPoint', 'scale', 'resizeMode']);
     return (
       <div className="better-img" style={wrapperStyles} ref={container => this.container = container}>
         <img
