@@ -7,6 +7,10 @@
     "type": "git",
     "url": "git+https://github.com/Doppy/BetterImg.git"
   },
+  "bugs": {
+    "url": "https://github.com/Doppy/BetterImg/issues"
+  },
+  "homepage": "https://github.com/Doppy/BetterImg",
   "scripts": {
     "precommit": "npm test",
     "commit": "git-cz",

@@ -31,6 +31,32 @@ const calculateScale = (resizeMode, containerWidth, containerHeight, imgWidth, i
   }
 }
 
+const convertPercentToDecimal = (num) => {
+  if (num.indexOf('%') !== -1) return parseFloat(num) / 100.0;
+  return num;
+};
+
+const mapFocalPointProps = (key) => {
+  switch (key) {
+    case 'center': return { focalPointX: .5, focalPointY: .5 };
+    case 'left': return { focalPointX: 0, focalPointY: .5 };
+    case 'right': return { focalPointX: 1, focalPointY: .5 };
+    case 'top': return { focalPointX: 0.5, focalPointY: 0 };
+    case 'bottom': return { focalPointX: 0.5, focalPointY: 1 };
+  }
+
+  const [focalX, focalY] = key.split(' ');
+  if (focalX && focalY) {
+    return {
+      focalPointX: convertPercentToDecimal(focalX),
+      focalPointY: convertPercentToDecimal(focalY)
+    };
+  }
+
+  // Else return center
+  return { focalPointX: .5, focalPointY: .5 };
+};
+
 class BetterImg extends Component {
 
   erd = null;
@@ -38,7 +64,9 @@ class BetterImg extends Component {
   static propTypes = {
     src: PropTypes.string,
     width: PropTypes.number,
-    height: PropTypes.number.isRequired,
+    height: PropTypes.number,
+    scale: PropTypes.number,
+    focalPoint: PropTypes.string,
     resizeMode: PropTypes.oneOf([
       'cover',
       'contain',
@@ -47,7 +75,10 @@ class BetterImg extends Component {
     ]),
   }
 
-  static defaultProps = {}
+  static defaultProps = {
+    scale: 1,
+    focalPoint: 'center',
+  }
 
   state = {
     imgWidth: 0,
@@ -92,7 +123,10 @@ class BetterImg extends Component {
   render() {
 
     // If no resizeMode is provided, be normal <img />
-    if (!this.props.resizeMode) return (<img {...this.props} />);
+    if (!this.props.resizeMode) {
+      const imgProps = _.omit(this.props, ['focalPoint', 'resizeMode', 'scale']);
+      return (<img {...imgProps} />);
+    }
 
     // If props.width is provide, use it, else use containerWidth for calculation
     const containerWidth = this.props.width || this.state.containerWidth;
@@ -109,19 +143,33 @@ class BetterImg extends Component {
       border: '1px solid black',
     };
 
-    // Calcualte Scale
+    // Calculate Scale
     let { scaleX, scaleY } = calculateScale(resizeMode, containerWidth, containerHeight, imgWidth, imgHeight);
-
-    // Center by default
-    let x = .5 * (containerWidth - imgWidth);
-    let y = .5 * (containerHeight - imgHeight);
-
-    const imgStyle = {
-      WebkitTransform: `translate3d(${x}px, ${y}px, 0) scaleX(${scaleX}) scaleY(${scaleY})`,
-      transform: `translate3d(${x}px, ${y}px, 0) scaleX(${scaleX}) scaleY(${scaleY})`,
+    if (resizeMode === 'cover' && this.props.scale) {
+      scaleX = this.props.scale * scaleX;
+      scaleY = this.props.scale * scaleY;
     }
 
-    const imgProps = _.omit(this.props, ['width', 'height']);
+    // Focal Point (cover only)
+    let focalPointX = .5;
+    let focalPointY = .5;
+    if (resizeMode === 'cover') {
+      let focalPoint = mapFocalPointProps(this.props.focalPoint);
+      focalPointX = focalPoint.focalPointX;
+      focalPointY = focalPoint.focalPointY;
+    }
+
+    // Calculate X,Y
+    let x = focalPointX * (containerWidth - scaleX * imgWidth);
+    let y = focalPointY * (containerHeight - scaleY * imgHeight);
+
+    const imgStyle = {
+      WebkitTransform: `translate3d(${x}px, ${y}px, 0) scale(${scaleX}, ${scaleY})`,
+      transform: `translate3d(${x}px, ${y}px, 0) scale(${scaleX}, ${scaleY})`,
+      transformOrigin: '0% 0%',
+    }
+
+    const imgProps = _.omit(this.props, ['width', 'height', 'focalPoint', 'scale', 'resizeMode']);
     return (
       <div className="better-img" style={wrapperStyles} ref={container => this.container = container}>
         <img
