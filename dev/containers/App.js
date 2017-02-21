@@ -16,6 +16,8 @@ export default class App extends Component {
         <BetterImg
           src="/img/puppy.jpg"
           height={600}
+          scale={1}
+          focalPoint="75% 50%"
           resizeMode="cover"
         />
         <h1>resizeMode: Stretch</h1>
