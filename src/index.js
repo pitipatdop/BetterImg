@@ -139,10 +139,10 @@ class BetterImg extends Component {
 
     const wrapperStyles = {
       overflow: 'hidden',
+      position: 'relative',
       // If props.width is provide, use it, else no need to control container's width
       width: this.props.width ? this.props.width : undefined,
       height: containerHeight,
-      border: '1px solid black',
     };
 
     // Calculate Scale

@@ -6,6 +6,8 @@ var config = require('./webpack.config.dev');
 var app = express();
 var compiler = webpack(config);
 
+var DEV_FOLDER = 'dev';
+
 app.use(require('webpack-dev-middleware')(compiler, {
   // noInfo: true,
   publicPath: config.output.publicPath,
@@ -28,9 +30,9 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-app.use('/img', express.static('img'));
+app.use('/img', express.static(DEV_FOLDER + '/img'));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, DEV_FOLDER + '/index.html'));
 });
 
 app.listen(3000, (err) => {
