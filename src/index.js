@@ -105,6 +105,8 @@ class BetterImg extends Component {
   state = {
     imgWidth: 0,
     imgHeight: 0,
+    imgLoaded: false,
+    imgClicked: false,
     currentZoomScale: this.props.scale,
     focalPoint: this.props.focalPoint,
     containerWidth: undefined,
@@ -119,6 +121,7 @@ class BetterImg extends Component {
     this.setState({
       imgWidth,
       imgHeight,
+      imgLoaded: true,
       containerHeight: this.props.height || imgHeight,
     });
 
@@ -160,12 +163,14 @@ class BetterImg extends Component {
       if (!this.state.isZoomedIn) {
         this.setState({
           isZoomedIn: true,
+          imgClicked: true,
           currentZoomScale: this.props.zoomInScale,
           focalPoint: `${pointX/containerWidth} ${pointY/containerHeight}`
         });
       } else {
         this.setState({
           isZoomedIn: false,
+          imgClicked: true,
           currentZoomScale: this.props.scale,
           focalPoint: 'center',
         });
@@ -221,8 +226,8 @@ class BetterImg extends Component {
       transform: `translate3d(${x}px, ${y}px, 0) scale(${scaleX}, ${scaleY})`,
       transformOrigin: '0% 0%',
     }
+    if (this.props.clickToZoom && this.state.imgClicked) imgStyle.transition = 'all .3s ease-out';
 
-    if (this.props.clickToZoom) imgStyle.transition = 'all .3s ease-out';
     const containerProps = {};
     if (this.props.clickToZoom) {
       containerProps.onClick = this.handleClick;

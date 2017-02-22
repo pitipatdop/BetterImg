@@ -18,7 +18,7 @@ export default class App extends Component {
           &lt;BetterImg scale={1} focalPoint="50% 50%"/&gt;
         </pre>
         <BetterImg
-          src="/img/puppy-line.jpg"
+          src="/img/puppy.jpg"
           height={600}
           resizeMode="cover"
           scale={1}

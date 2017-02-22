@@ -25,6 +25,7 @@ all normal `<img />` props can be used
   - scale = 1, the image will cover the whole area precisely.
 - `clickToZoom` (Boolean: default = false) if true then user can click to zoomIn
 - `zoomInScale` determine value of zoomed-in scale when clickToZoom
+![img](http://i.giphy.com/3o84TYe7Y9yOFHFnIQ.gif)
 
 Note: If you do not provide resizeMode, `<BetterImg />` will just render normal `<img />`
 
