@@ -22,7 +22,9 @@ all normal `<img />` props can be used
   - `{x} {y}`: (eg. `focalPoint=".75 .5"` or `focalPoint="75% 50%"`) focus on the point `x%` from the left and `y%` from the top.
 ![img](http://i.imgur.com/XY3jVPX.png)
 - `scale`: (work if resizeMode = 'cover') if provided, the image will scale from container width. (Not image original width)
-  - scale = 1, the image will cover the whole area perfectly
+  - scale = 1, the image will cover the whole area precisely.
+- `clickToZoom` (Boolean: default = false) if true then user can click to zoomIn
+- `zoomInScale` determine value of zoomed-in scale when clickToZoom
 
 Note: If you do not provide resizeMode, `<BetterImg />` will just render normal `<img />`
 

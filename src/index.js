@@ -222,15 +222,18 @@ class BetterImg extends Component {
       transformOrigin: '0% 0%',
     }
 
-    if (this.props.clickToZoom) imgStyle.transition = 'all .4s ease-out';
-
+    if (this.props.clickToZoom) imgStyle.transition = 'all .3s ease-out';
+    const containerProps = {};
+    if (this.props.clickToZoom) {
+      containerProps.onClick = this.handleClick;
+    }
     const imgProps = pick(this.props, imgAttrs);
     return (
       <div
         className="better-img"
         style={wrapperStyles}
         ref={container => this.container = container}
-        onClick={this.handleClick}
+        {...containerProps}
       >
         <img
           {...imgProps}
