@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
 import BetterImg from '../../src';
 
-
 export default class App extends Component {
 
-  // handleClick = (e) => {
-  //   /*
-  //   pos_x = event.offsetX ? (event.offsetX) : event.pageX-document.getElementById("pointer_div").offsetLeft;
-  //   pos_y = event.offsetY?(event.offsetY):event.pageY-document.getElementById("pointer_div").offsetTop;
-  //    */
-  //   console.log(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-  // }
   render() {
     return (
       <div className="container">
@@ -29,6 +21,8 @@ export default class App extends Component {
           src="/img/puppy-line.jpg"
           height={600}
           resizeMode="cover"
+          scale={1}
+          zoomInScale={2.5}
           clickToZoom
         />
         <div className="row">

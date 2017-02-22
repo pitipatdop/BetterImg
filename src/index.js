@@ -1,7 +1,23 @@
 import React, { Component, PropTypes } from 'react';
-import omit from 'lodash/omit';
+import pick from 'lodash/pick';
 
 const elementResizeDetectorMaker = require("element-resize-detector");
+
+const imgAttrs = [
+  "align",
+  "alt",
+  "crossorigin",
+  "height",
+  "hspace",
+  "ismap",
+  "longdesc",
+  "sizes",
+  "src",
+  "srcset",
+  "usemap",
+  "vspace",
+  "width",
+];
 
 const calculateScale = (resizeMode, containerWidth, containerHeight, imgWidth, imgHeight) => {
 
@@ -68,7 +84,9 @@ class BetterImg extends Component {
     width: PropTypes.number,
     height: PropTypes.number,
     scale: PropTypes.number,
+    zoomInScale: PropTypes.number,
     focalPoint: PropTypes.string,
+    clickToZoom: PropTypes.bool,
     resizeMode: PropTypes.oneOf([
       'cover',
       'contain',
@@ -80,11 +98,15 @@ class BetterImg extends Component {
   static defaultProps = {
     scale: 1,
     focalPoint: 'center',
+    zoomInScale: 2,
+    clickToZoom: false,
   }
 
   state = {
     imgWidth: 0,
     imgHeight: 0,
+    currentZoomScale: this.props.scale,
+    focalPoint: this.props.focalPoint,
     containerWidth: undefined,
     containerHeight: undefined,
   }
@@ -122,11 +144,40 @@ class BetterImg extends Component {
     });
   }
 
+  handleClick = (e) => {
+    e.stopPropagation();
+    const { clickToZoom } = this.props;
+    if (clickToZoom) {
+      // console.log('BetterImg', e.nativeEvent.clientX, e.nativeEvent.clientY);
+      // console.log('Parent', this.container.getBoundingClientRect());
+      const { left, top } = this.container.getBoundingClientRect();
+      const pointX = e.nativeEvent.clientX - left;
+      const pointY = e.nativeEvent.clientY - top;
+      // console.log('pointX,Y = ', pointX, pointY);
+      const containerWidth = this.props.width || this.state.containerWidth;
+      const containerHeight = this.state.containerHeight;
+
+      if (!this.state.isZoomedIn) {
+        this.setState({
+          isZoomedIn: true,
+          currentZoomScale: this.props.zoomInScale,
+          focalPoint: `${pointX/containerWidth} ${pointY/containerHeight}`
+        });
+      } else {
+        this.setState({
+          isZoomedIn: false,
+          currentZoomScale: this.props.scale,
+          focalPoint: 'center',
+        });
+      }
+    }
+  }
+
   render() {
 
     // If no resizeMode is provided, be normal <img />
     if (!this.props.resizeMode) {
-      const imgProps = omit(this.props, ['focalPoint', 'resizeMode', 'scale']);
+      const imgProps = pick(this.props, imgAttrs);
       return (<img {...imgProps} />);
     }
 
@@ -147,16 +198,16 @@ class BetterImg extends Component {
 
     // Calculate Scale
     let { scaleX, scaleY } = calculateScale(resizeMode, containerWidth, containerHeight, imgWidth, imgHeight);
-    if (resizeMode === 'cover' && this.props.scale) {
-      scaleX = this.props.scale * scaleX;
-      scaleY = this.props.scale * scaleY;
+    if (resizeMode === 'cover' && this.state.currentZoomScale) {
+      scaleX = this.state.currentZoomScale * scaleX;
+      scaleY = this.state.currentZoomScale * scaleY;
     }
 
     // Focal Point (cover only)
     let focalPointX = .5;
     let focalPointY = .5;
     if (resizeMode === 'cover') {
-      let focalPoint = mapFocalPointProps(this.props.focalPoint);
+      let focalPoint = mapFocalPointProps(this.state.focalPoint);
       focalPointX = focalPoint.focalPointX;
       focalPointY = focalPoint.focalPointY;
     }
@@ -171,9 +222,16 @@ class BetterImg extends Component {
       transformOrigin: '0% 0%',
     }
 
-    const imgProps = omit(this.props, ['width', 'height', 'focalPoint', 'scale', 'resizeMode']);
+    if (this.props.clickToZoom) imgStyle.transition = 'all .4s ease-out';
+
+    const imgProps = pick(this.props, imgAttrs);
     return (
-      <div className="better-img" style={wrapperStyles} ref={container => this.container = container}>
+      <div
+        className="better-img"
+        style={wrapperStyles}
+        ref={container => this.container = container}
+        onClick={this.handleClick}
+      >
         <img
           {...imgProps}
           src={src}
