@@ -1,11 +1,16 @@
-
-
 import React, { Component } from 'react';
-// import BetterImg from '../../dist';
 import BetterImg from '../../src';
+
 
 export default class App extends Component {
 
+  // handleClick = (e) => {
+  //   /*
+  //   pos_x = event.offsetX ? (event.offsetX) : event.pageX-document.getElementById("pointer_div").offsetLeft;
+  //   pos_y = event.offsetY?(event.offsetY):event.pageY-document.getElementById("pointer_div").offsetTop;
+  //    */
+  //   console.log(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+  // }
   render() {
     return (
       <div className="container">
@@ -21,11 +26,10 @@ export default class App extends Component {
           &lt;BetterImg scale={1} focalPoint="50% 50%"/&gt;
         </pre>
         <BetterImg
-          src="/img/puppy.jpg"
+          src="/img/puppy-line.jpg"
           height={600}
-          scale={1}
-          focalPoint="75% 50%"
           resizeMode="cover"
+          clickToZoom
         />
         <div className="row">
           <div className="col-sm-4">
