@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import BetterImg from '../../dist';
 import BetterImg from '../../src';
 
 export default class App extends Component {
@@ -21,9 +20,10 @@ export default class App extends Component {
         <BetterImg
           src="/img/puppy.jpg"
           height={600}
-          scale={1}
-          focalPoint="75% 50%"
           resizeMode="cover"
+          scale={1}
+          zoomInScale={2.5}
+          clickToZoom
         />
         <div className="row">
           <div className="col-sm-4">
