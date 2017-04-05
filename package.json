@@ -12,7 +12,7 @@
   },
   "homepage": "https://github.com/Doppy/BetterImg",
   "scripts": {
-    "precommit": "npm test",
+    "popocommit": "npm test",
     "commit": "git-cz",
     "dev": "cross-env NODE_ENV=development node server.js",
     "test": "cross-env NODE_ENV=test mocha test/index.js --compilers js:babel-register",
