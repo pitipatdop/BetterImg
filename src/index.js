@@ -183,7 +183,7 @@ class BetterImg extends Component {
     // If no resizeMode is provided, be normal <img />
     if (!this.props.resizeMode) {
       const imgProps = pick(this.props, imgAttrs);
-      return (<img {...imgProps} />);
+      return (<img {...imgProps} data-attr="novalue" />);
     }
 
     // If props.width is provide, use it, else use containerWidth for calculation
